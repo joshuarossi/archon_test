@@ -15,7 +15,12 @@ app.get('/', (c) => {
 })
 
 app.post('/todos', async (c) => {
-  const body = await c.req.parseBody()
+  let body: Record<string, string | File>
+  try {
+    body = await c.req.parseBody()
+  } catch {
+    return c.text('Invalid request body', 400)
+  }
   const title = typeof body['title'] === 'string' ? body['title'].trim() : ''
   if (!title) {
     return c.text('Title is required', 400)

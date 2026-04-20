@@ -74,7 +74,7 @@ export function TodoList({ todos }: { todos: Todo[] }) {
 
 export function TodoForm() {
   return (
-    <form hx-post="/todos" hx-target="#todo-list" hx-swap="innerHTML">
+    <form hx-post="/todos" hx-target="#todo-list" hx-swap="outerHTML" hx-on--after-request="if(event.detail.successful) this.reset()">
       <input type="text" name="title" placeholder="What needs to be done?" required />
       <button type="submit" class="btn-add">Add</button>
     </form>
